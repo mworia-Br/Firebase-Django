@@ -22,7 +22,7 @@ firebase = pyrebase.initialize_app(config)
 storage = firebase.storage()
 
 
-def view_name(request):
+def fire(request):
     if request.method == 'POST':
         file = request.FILES['file']
         file_save = default_storage.save(file.name, file)
