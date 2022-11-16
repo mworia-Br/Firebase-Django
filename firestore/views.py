@@ -21,5 +21,14 @@ config = {
 firebase = pyrebase.initialize_app(config)
 storage = firebase.storage()
 
+
 def view_name(request):
-    return render(request, 'fire.html', {})
+    if request.method == 'POST':
+        file = request.FILES['file']
+        file_save = default_storage.save(file.name, file)
+        storage.child("files/" + file.name).put("media/" + file.name)
+        delete = default_storage.delete(file.name)
+        messages.success(request, "File upload in Firebase Storage successful")
+        return redirect('main')
+    else:
+        return render(request, 'fire.html')
